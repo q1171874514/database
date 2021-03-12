@@ -8,14 +8,10 @@ import java.util.function.Function;
 /**
  *记录类字段
  */
-@Target({ElementType.TYPE})
+@Target({ElementType.TYPE, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-public @interface RecordTypeField {
-    /**
-     * key
-     * @return
-     */
-    String value();
+public @interface RecordField {
+    String value() default "";
 }

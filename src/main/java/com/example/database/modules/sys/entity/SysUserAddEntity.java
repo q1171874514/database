@@ -2,7 +2,7 @@ package com.example.database.modules.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.database.common.entity.BaseEntity;
-import com.example.database.common.record.annotation.RecordTypeField;
+import com.example.database.common.record.annotation.RecordField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @TableName("sys_user_add")
-@RecordTypeField("sys_user")
+@RecordField("sys_user")
 public class SysUserAddEntity extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 

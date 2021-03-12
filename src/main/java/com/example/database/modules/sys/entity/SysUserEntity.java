@@ -12,7 +12,6 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.database.common.entity.BaseEntity;
-import com.example.database.common.record.annotation.RecordTypeField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
