@@ -16,6 +16,7 @@ import org.springframework.util.ClassUtils;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.util.*;
 
 
@@ -48,16 +49,18 @@ public class RecordFieldHandler {
             else if(notRecordField != null && !notRecordField.value().equals(""))
                 notRecordFieldAnnotation(classData, RecordFieldMap.recordField, notRecordField.value());
         });
+        Map<String, List<String>> recordField = RecordFieldMap.recordField;
     }
 
     private void recordFieldAnnotation(Class<?> classData, Map<String, List<String>> recordMap, String key) {
         Arrays.stream(classData.getDeclaredFields())
-                .filter(field -> excludeField.contains(field.getName()))
+                .filter(field -> !excludeField.contains(field.getName()))
                 .filter(field -> field.getAnnotation(NotRecordField.class) == null)
                 .forEach(field -> {
-                    String value = field.getAnnotation(RecordField.class).value();
-                    if(value.equals(""))
-                        value = field.getName();
+                    RecordField annotation = field.getAnnotation(RecordField.class);
+                    String value = field.getName();
+                    if(annotation != null && !annotation.value().equals(""))
+                        value = annotation.value();
                     if(recordMap.get(key) == null)
                         recordMap.put(key, new LinkedList<String>());
                     recordMap.get(key).add(value);
@@ -66,7 +69,7 @@ public class RecordFieldHandler {
 
     private void notRecordFieldAnnotation(Class<?> classData, Map<String, List<String>> recordMap, String key) {
         Arrays.stream(classData.getDeclaredFields())
-                .filter(field -> excludeField.contains(field.getName()))
+                .filter(field -> !excludeField.contains(field.getName()))
                 .filter(field -> field.getAnnotation(RecordField.class) != null)
                 .forEach(field -> {
                     String value = field.getAnnotation(RecordField.class).value();

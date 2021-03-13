@@ -8,6 +8,8 @@
 
 package com.example.database.modules.sys.dto;
 
+import com.example.database.common.record.annotation.NotRecordField;
+import com.example.database.common.record.annotation.RecordField;
 import com.example.database.common.validator.group.AddGroup;
 import com.example.database.common.validator.group.DefaultGroup;
 import com.example.database.common.validator.group.UpdateGroup;
@@ -33,6 +35,7 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "用户管理")
+@NotRecordField("sys_user")
 public class SysUserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -91,6 +94,7 @@ public class SysUserDTO implements Serializable {
 	private String deptName;
 
 	@ApiModelProperty(value = "仓库总大小")
+	@RecordField
 	private Long totalSize;
 
 }

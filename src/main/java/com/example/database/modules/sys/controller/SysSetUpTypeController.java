@@ -3,6 +3,7 @@ package com.example.database.modules.sys.controller;
 import com.example.database.common.annotation.LogOperation;
 import com.example.database.common.constant.Constant;
 import com.example.database.common.page.PageData;
+import com.example.database.common.record.SetUpDataUtils;
 import com.example.database.common.utils.ExcelUtils;
 import com.example.database.common.utils.Result;
 import com.example.database.common.validator.AssertUtils;
@@ -10,9 +11,9 @@ import com.example.database.common.validator.ValidatorUtils;
 import com.example.database.common.validator.group.AddGroup;
 import com.example.database.common.validator.group.DefaultGroup;
 import com.example.database.common.validator.group.UpdateGroup;
-import com.example.database.modules.sys.dto.SysSetUpFieldDTO;
-import com.example.database.modules.sys.excel.SysSetUpFieldExcel;
-import com.example.database.modules.sys.service.SysSetUpFieldService;
+import com.example.database.modules.sys.dto.SysSetUpTypeDTO;
+import com.example.database.modules.sys.excel.SysSetUpTypeExcel;
+import com.example.database.modules.sys.service.SysSetUpTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -28,17 +29,17 @@ import java.util.Map;
 
 
 /**
- * 表字段设置
+ * 表设置
  *
  * @author Mark sunlightcs@gmail.com
  * @since 1.0.0 2021-03-08
  */
 @RestController
-@RequestMapping("sys/syssetupfield")
-@Api(tags="表字段设置")
-public class SysSetUpFieldController {
+@RequestMapping("sys/setup/type")
+@Api(tags="表设置")
+public class SysSetUpTypeController {
     @Autowired
-    private SysSetUpFieldService sysSetUpFieldService;
+    private SysSetUpTypeService SysSetUpTypeService;
 
     @GetMapping("page")
     @ApiOperation("分页")
@@ -48,31 +49,31 @@ public class SysSetUpFieldController {
         @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
         @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String")
     })
-    @RequiresPermissions("sys:syssetupfield:page")
-    public Result<PageData<SysSetUpFieldDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params){
-        PageData<SysSetUpFieldDTO> page = sysSetUpFieldService.page(params);
+    @RequiresPermissions("sys:setuptype:page")
+    public Result<PageData<SysSetUpTypeDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params){
+        PageData<SysSetUpTypeDTO> page = SysSetUpTypeService.page(params);
 
-        return new Result<PageData<SysSetUpFieldDTO>>().ok(page);
+        return new Result<PageData<SysSetUpTypeDTO>>().ok(page);
     }
 
     @GetMapping("{id}")
     @ApiOperation("信息")
-    @RequiresPermissions("sys:syssetupfield:info")
-    public Result<SysSetUpFieldDTO> get(@PathVariable("id") Long id){
-        SysSetUpFieldDTO data = sysSetUpFieldService.get(id);
+    @RequiresPermissions("sys:setuptype:info")
+    public Result<SysSetUpTypeDTO> get(@PathVariable("id") Long id){
+        SysSetUpTypeDTO data = SysSetUpTypeService.get(id);
 
-        return new Result<SysSetUpFieldDTO>().ok(data);
+        return new Result<SysSetUpTypeDTO>().ok(data);
     }
 
     @PostMapping
     @ApiOperation("保存")
     @LogOperation("保存")
-    @RequiresPermissions("sys:syssetupfield:save")
-    public Result save(@RequestBody SysSetUpFieldDTO dto){
+    @RequiresPermissions("sys:setuptype:save")
+    public Result save(@RequestBody SysSetUpTypeDTO dto){
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
-        sysSetUpFieldService.save(dto);
+        SysSetUpTypeService.save(dto);
 
         return new Result();
     }
@@ -80,12 +81,12 @@ public class SysSetUpFieldController {
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
-    @RequiresPermissions("sys:syssetupfield:update")
-    public Result update(@RequestBody SysSetUpFieldDTO dto){
+    @RequiresPermissions("sys:setuptype:update")
+    public Result update(@RequestBody SysSetUpTypeDTO dto){
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
-        sysSetUpFieldService.update(dto);
+        SysSetUpTypeService.update(dto);
 
         return new Result();
     }
@@ -93,12 +94,12 @@ public class SysSetUpFieldController {
     @DeleteMapping
     @ApiOperation("删除")
     @LogOperation("删除")
-    @RequiresPermissions("sys:syssetupfield:delete")
+    @RequiresPermissions("sys:setuptype:delete")
     public Result delete(@RequestBody Long[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 
-        sysSetUpFieldService.delete(ids);
+        SysSetUpTypeService.delete(ids);
 
         return new Result();
     }
@@ -106,11 +107,11 @@ public class SysSetUpFieldController {
     @GetMapping("export")
     @ApiOperation("导出")
     @LogOperation("导出")
-    @RequiresPermissions("sys:syssetupfield:export")
+    @RequiresPermissions("sys:setuptype:export")
     public void export(@ApiIgnore @RequestParam Map<String, Object> params, HttpServletResponse response) throws Exception {
-        List<SysSetUpFieldDTO> list = sysSetUpFieldService.list(params);
+        List<SysSetUpTypeDTO> list = SysSetUpTypeService.list(params);
 
-        ExcelUtils.exportExcelToTarget(response, null, list, SysSetUpFieldExcel.class);
+        ExcelUtils.exportExcelToTarget(response, null, list, SysSetUpTypeExcel.class);
     }
 
 }

@@ -15,7 +15,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @TableName("sys_user_add")
-@RecordField("sys_user")
 public class SysUserAddEntity extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 

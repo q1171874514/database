@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.database.modules.sys.dao.SysSetUpTypeDao">
+    <select id="getByTypeName" resultType="com.example.database.modules.sys.entity.SysSetUpTypeEntity">
+		select * from sys_set_up_type where type_name = #{typeName}
+	</select>
+</mapper>

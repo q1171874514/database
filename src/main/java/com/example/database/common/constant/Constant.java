@@ -98,7 +98,6 @@ public interface Constant {
      * 邮件配置KEY
      */
     String MAIL_CONFIG_KEY = "MAIL_CONFIG_KEY";
-
     /**
      * 定时任务状态
      */

@@ -10,29 +10,25 @@ import lombok.EqualsAndHashCode;
 import java.util.Date;
 
 /**
- * 表字段设置
+ * 表设置
  *
  * @author Mark sunlightcs@gmail.com
  * @since 1.0.0 2021-03-08
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-@TableName("sys_set_up_field")
-public class SysSetUpFieldEntity extends BaseEntity {
+@TableName("sys_set_up_type")
+public class SysSetUpTypeEntity extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
     /**
-     * 设置表名ID
+     * 标签
      */
-	private Long setUpTableId;
+	private String label;
     /**
-     * 字段标签
+     * 表名
      */
-	private String fieldLabel;
-    /**
-     * 字段值
-     */
-	private String fieldValue;
+	private String typeName;
     /**
      * 备注
      */
@@ -41,10 +37,6 @@ public class SysSetUpFieldEntity extends BaseEntity {
      * 排序
      */
 	private Integer sort;
-    /**
-     * 类型（0未设置，1默认，2初始）
-     */
-	private Integer type;
     /**
      * 更新者
      */

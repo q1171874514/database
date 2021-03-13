@@ -10,33 +10,53 @@ import lombok.EqualsAndHashCode;
 import java.util.Date;
 
 /**
- * 表设置
+ * 表字段设置
  *
  * @author Mark sunlightcs@gmail.com
  * @since 1.0.0 2021-03-08
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-@TableName("sys_set_up_table")
-public class SysSetUpTableEntity extends BaseEntity {
+@TableName("sys_set_up_data")
+public class SysSetUpDataEntity extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
     /**
-     * 标签
+     * 设置表名ID
+     */
+	private Long setUpTableId;
+    /**
+     * 字段标签
      */
 	private String label;
+	/**
+	 * 字段名
+	 */
+	private String fieldName;
     /**
-     * 表名
+     * 字段值
      */
-	private String tableName;
+	private String fieldValue;
     /**
      * 备注
      */
 	private String remark;
+	/**
+	 * 保存类型
+	 */
+	private Integer saveType;
+	/**
+	 * 更新类型
+	 */
+	private Integer updateType;
     /**
      * 排序
      */
 	private Integer sort;
+    /**
+     * 类型（0未设置，1默认，2初始）
+     */
+	private Integer type;
     /**
      * 更新者
      */

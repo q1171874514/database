@@ -21,7 +21,7 @@ import java.util.Date;
  */
 @Data
 @ApiModel(value = "表设置")
-public class SysSetUpTableDTO implements Serializable {
+public class SysSetUpTypeDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(value = "id")
@@ -33,7 +33,7 @@ public class SysSetUpTableDTO implements Serializable {
 	private String label;
 
 	@ApiModelProperty(value = "表名")
-	private String tableName;
+	private String typeName;
 
 	@ApiModelProperty(value = "备注")
 	private String remark;

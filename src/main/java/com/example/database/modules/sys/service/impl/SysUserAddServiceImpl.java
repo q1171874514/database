@@ -1,7 +1,9 @@
 package com.example.database.modules.sys.service.impl;
 
 import com.example.database.common.service.impl.BaseServiceImpl;
+import com.example.database.common.utils.ConvertUtils;
 import com.example.database.modules.sys.dao.SysUserAddDao;
+import com.example.database.modules.sys.dto.SysUserDTO;
 import com.example.database.modules.sys.entity.SysUserAddEntity;
 import com.example.database.modules.sys.entity.SysUserEntity;
 import com.example.database.modules.sys.service.SysUserAddService;
@@ -27,4 +29,18 @@ public class SysUserAddServiceImpl extends BaseServiceImpl<SysUserAddDao, SysUse
         }
         return sysUserAddEntity;
     }
+
+    @Override
+    public void save(SysUserDTO sysUserDTO) {
+        SysUserAddEntity sysUserAddEntity = ConvertUtils.sourceToTarget(sysUserDTO, currentModelClass());
+        this.insert(sysUserAddEntity);
+    }
+
+    @Override
+    public void update(SysUserDTO sysUserDTO) {
+        SysUserAddEntity sysUserAddEntity = ConvertUtils.sourceToTarget(sysUserDTO, currentModelClass());
+        this.updateById(sysUserAddEntity);
+    }
+
+
 }

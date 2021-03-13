@@ -61,6 +61,6 @@ server:
 
 record:
   resource-path: com.example.database.modules
-  class-path: /sys/entity/SysUserEntity.class
+  class-path: /**/dto/**.class
   redis-key: recordTypeField
-  exclude-field: createDate, creator, updateDate,  updater, updater, id
+  exclude-field: serialVersionUID, creatorName, createDate, creator, updateDate,  updater, updaterName, id

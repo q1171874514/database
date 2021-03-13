@@ -112,7 +112,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUserEntit
 		//保存用户
 		entity.setSuperAdmin(SuperAdminEnum.NO.value());
 		insert(entity);
-
+		sysUserAddService.save(dto);
 		//保存角色用户关系
 		sysRoleUserService.saveOrUpdate(entity.getId(), dto.getRoleIdList());
 	}
@@ -132,7 +132,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUserEntit
 
 		//更新用户
 		updateById(entity);
-
+		sysUserAddService.update(dto);
 		//更新角色用户关系
 		sysRoleUserService.saveOrUpdate(entity.getId(), dto.getRoleIdList());
 	}
@@ -141,7 +141,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUserEntit
 	public void delete(Long[] ids) {
 		//删除用户
 		baseDao.deleteBatchIds(Arrays.asList(ids));
-
+		sysUserAddService.deleteBatchIds(Arrays.asList(ids));
 		//删除角色用户关系
 		sysRoleUserService.deleteByUserIds(ids);
 	}

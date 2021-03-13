@@ -12,6 +12,7 @@ import com.example.database.common.annotation.LogOperation;
 import com.example.database.common.constant.Constant;
 import com.example.database.common.exception.ErrorCode;
 import com.example.database.common.page.PageData;
+import com.example.database.common.record.SetUpDataUtils;
 import com.example.database.common.utils.ConvertUtils;
 import com.example.database.common.utils.ExcelUtils;
 import com.example.database.common.utils.Result;
@@ -27,6 +28,7 @@ import com.example.database.modules.sys.dto.PasswordDTO;
 import com.example.database.modules.sys.dto.SysUserDTO;
 import com.example.database.modules.sys.excel.SysUserExcel;
 import com.example.database.modules.sys.service.SysRoleUserService;
+import com.example.database.modules.sys.service.SysSetUpTypeService;
 import com.example.database.modules.sys.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -54,6 +56,8 @@ public class SysUserController {
 	private SysUserService sysUserService;
 	@Autowired
 	private SysRoleUserService sysRoleUserService;
+	@Autowired
+	private SysSetUpTypeService sysSetUpTypeService;
 
 	@GetMapping("page")
 	@ApiOperation("分页")
@@ -117,9 +121,9 @@ public class SysUserController {
 	@RequiresPermissions("sys:user:save")
 	@LogOperation("保存")
 	public Result save(@RequestBody SysUserDTO dto){
+		SetUpDataUtils.saveSetUp(dto, sysSetUpTypeService.listByTypeNameSetUp(SetUpDataUtils.getTypeName(dto)));
 		//效验数据
 		ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
-
 		sysUserService.save(dto);
 
 		return new Result();

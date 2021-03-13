@@ -20,8 +20,8 @@ import java.util.Date;
  * @since 1.0.0 2021-03-08
  */
 @Data
-@ApiModel(value = "表字段设置")
-public class SysSetUpFieldDTO implements Serializable {
+@ApiModel(value = "字段设置")
+public class SysSetUpDataDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(value = "id")
@@ -30,17 +30,28 @@ public class SysSetUpFieldDTO implements Serializable {
 	private Long id;
 
 	@ApiModelProperty(value = "设置表名ID")
-	@Null(message="表id不可修改", groups = UpdateGroup.class)
+	@Null(message="外键不可修改", groups = UpdateGroup.class)
 	private Long setUpTableId;
 
 	@ApiModelProperty(value = "字段标签")
-	private String fieldLabel;
+	private String label;
+
+	@ApiModelProperty(value = "字段名")
+	@NotNull(message="表名不能空", groups = AddGroup.class)
+	@Null(message="表名不可修改", groups = UpdateGroup.class)
+	private String fieldName;
 
 	@ApiModelProperty(value = "字段值")
 	private String fieldValue;
 
 	@ApiModelProperty(value = "备注")
 	private String remark;
+
+	@ApiModelProperty(value = "保存类型")
+	private Integer saveType;
+
+	@ApiModelProperty(value = "更新类型")
+	private Integer updateType;
 
 	@ApiModelProperty(value = "排序")
 	private Integer sort;
