@@ -8,6 +8,8 @@
 
 package com.example.database.modules.sys.dto;
 
+import com.example.database.common.record.annotation.NotRecordField;
+import com.example.database.common.record.annotation.RecordField;
 import com.example.database.common.validator.group.AddGroup;
 import com.example.database.common.validator.group.DefaultGroup;
 import com.example.database.common.validator.group.UpdateGroup;
@@ -31,6 +33,7 @@ import java.util.List;
  */
 @Data
 @ApiModel(value = "角色管理")
+@NotRecordField
 public class SysRoleDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -54,6 +57,7 @@ public class SysRoleDTO implements Serializable {
 	private List<Long> menuIdList;
 
 	@ApiModelProperty(value = "部门ID列表")
+	@RecordField
 	private List<Long> deptIdList;
 
 }

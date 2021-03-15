@@ -56,6 +56,7 @@ public class SysSetUpDataController {
         return new Result<PageData<SysSetUpDataDTO>>().ok(page);
     }
 
+
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("sys:setupdata:info")

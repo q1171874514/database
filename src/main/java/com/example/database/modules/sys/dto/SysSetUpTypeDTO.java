@@ -20,7 +20,7 @@ import java.util.Date;
  * @since 1.0.0 2021-03-08
  */
 @Data
-@ApiModel(value = "表设置")
+@ApiModel(value = "类设置")
 public class SysSetUpTypeDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 

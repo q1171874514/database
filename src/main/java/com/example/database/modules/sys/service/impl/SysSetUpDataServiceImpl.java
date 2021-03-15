@@ -24,17 +24,18 @@ public class SysSetUpDataServiceImpl extends CrudServiceImpl<SysSetUpDataDao, Sy
     @Override
     public QueryWrapper<SysSetUpDataEntity> getWrapper(Map<String, Object> params){
         String id = (String)params.get("id");
-        String tableName = (String)params.get("tableName");
+        String setUpTypeId = (String)params.get("setUpTypeId");
+        String state = (String)params.get("state");
         QueryWrapper<SysSetUpDataEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id)
-                .eq(StringUtils.isNotBlank(tableName), "table_name", tableName);
-
+                .eq(StringUtils.isNotBlank(setUpTypeId), "set_up_type_id",setUpTypeId)
+                .eq(StringUtils.isNotBlank(state), "state", state);
         return wrapper;
     }
 
 
     @Override
-    public List<SysSetUpDataEntity> listBySetUpTypeId(Long setUpTypeId) {
-        return baseDao.listBySetUpTypeId(setUpTypeId);
+    public List<SysSetUpDataEntity> listBySetUpTypeId(Long setUpTypeId, Integer type) {
+        return baseDao.listBySetUpTypeId(setUpTypeId, type);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.database.common.record;
 
+import com.example.database.common.constant.Constant;
 import com.example.database.common.exception.RenException;
 import com.example.database.common.record.annotation.NotRecordField;
 import com.example.database.common.record.annotation.RecordField;
@@ -16,18 +17,6 @@ import java.util.Map;
  * 根据设置处理对象
  */
 public class SetUpDataUtils {
-    //默认
-    public final static Integer DEFAULT = 0;
-    //初始
-    public final static Integer INITIAL = 1;
-    //可改
-    public final static Integer MODIFIED = 0;
-    //不可改
-    public final static Integer NOTMODIFIED = 1;
-    //可用
-    public final static Integer AVAILABLE = 0;
-    //不可用
-    public final static Integer NOTAVAILABLE = 1;
 
     /**
      * 保存设置
@@ -37,7 +26,6 @@ public class SetUpDataUtils {
     public static void saveSetUp(Object object, List<SetUpDataDTO> setUpDataDTOList){
         if(setUpDataDTOList == null)return;
         setUpDataDTOList.stream()
-                .filter(setUpDataDTO -> setUpDataDTO.getType() == SetUpDataUtils.AVAILABLE)
                 .filter(setUpDataDTO -> isSaveField(object,setUpDataDTO))
                 .forEach(setUpDataDTO -> {
                     try {
@@ -62,7 +50,6 @@ public class SetUpDataUtils {
     public static void updateSetUp(Object object, List<SetUpDataDTO> setUpDataDTOList){
         if(setUpDataDTOList == null)return;
         setUpDataDTOList.stream()
-                .filter(setUpDataDTO -> setUpDataDTO.getType() == SetUpDataUtils.AVAILABLE)
                 .filter(setUpDataDTO -> isUpdateField(object,setUpDataDTO))
                 .forEach(setUpDataDTO -> {
                     try {
@@ -85,7 +72,7 @@ public class SetUpDataUtils {
         field.setAccessible(true);
         Object fieldObject = field.get(object);
         field.setAccessible(false);
-        if(setUpDataDTO.getSaveType() == SetUpDataUtils.INITIAL || fieldObject == null) {
+        if(setUpDataDTO.getSaveType() == Constant.RecordField.INITIAL.getValue() || fieldObject == null) {
             return true;
         }
         return false;
@@ -98,7 +85,7 @@ public class SetUpDataUtils {
         field.setAccessible(true);
         Object fieldObject = field.get(object);
         field.setAccessible(false);
-        if(setUpDataDTO.getUpdateType() == SetUpDataUtils.NOTMODIFIED) {
+        if(setUpDataDTO.getUpdateType() == Constant.RecordField.NOTMODIFIED.getValue()) {
             return true;
         }
         return false;

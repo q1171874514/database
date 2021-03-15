@@ -30,15 +30,16 @@ public class SysSetUpDataDTO implements Serializable {
 	private Long id;
 
 	@ApiModelProperty(value = "设置表名ID")
+	@NotNull(message="外键不能空", groups = AddGroup.class)
 	@Null(message="外键不可修改", groups = UpdateGroup.class)
-	private Long setUpTableId;
+	private Long setUpTypeId;
 
 	@ApiModelProperty(value = "字段标签")
 	private String label;
 
 	@ApiModelProperty(value = "字段名")
-	@NotNull(message="表名不能空", groups = AddGroup.class)
-	@Null(message="表名不可修改", groups = UpdateGroup.class)
+	@NotNull(message="字段名不能空", groups = AddGroup.class)
+	@Null(message="字段名不可修改", groups = UpdateGroup.class)
 	private String fieldName;
 
 	@ApiModelProperty(value = "字段值")
@@ -56,8 +57,8 @@ public class SysSetUpDataDTO implements Serializable {
 	@ApiModelProperty(value = "排序")
 	private Integer sort;
 
-	@ApiModelProperty(value = "类型（0未设置，1默认，2初始）")
-	private Integer type;
+	@ApiModelProperty(value = "状态（0可用，1不可用）")
+	private Integer state;
 
 	@ApiModelProperty(value = "创建者")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -74,6 +75,4 @@ public class SysSetUpDataDTO implements Serializable {
 	@ApiModelProperty(value = "更新时间")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private Date updateDate;
-
-
 }

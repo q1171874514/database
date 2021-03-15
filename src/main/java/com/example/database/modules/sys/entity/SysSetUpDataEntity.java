@@ -24,7 +24,7 @@ public class SysSetUpDataEntity extends BaseEntity {
     /**
      * 设置表名ID
      */
-	private Long setUpTableId;
+	private Long setUpTypeId;
     /**
      * 字段标签
      */
@@ -54,9 +54,9 @@ public class SysSetUpDataEntity extends BaseEntity {
      */
 	private Integer sort;
     /**
-     * 类型（0未设置，1默认，2初始）
+     * 状态（0可用，1不可用）
      */
-	private Integer type;
+	private Integer state;
     /**
      * 更新者
      */

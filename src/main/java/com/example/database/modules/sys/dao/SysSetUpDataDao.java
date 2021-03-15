@@ -15,5 +15,5 @@ import java.util.List;
  */
 @Mapper
 public interface SysSetUpDataDao extends BaseMapper<SysSetUpDataEntity> {
-	List<SysSetUpDataEntity> listBySetUpTypeId(@Param("setUpTypeId") Long setUpTypeId);
+	List<SysSetUpDataEntity> listBySetUpTypeId(@Param("setUpTypeId") Long setUpTypeId, @Param("state") Integer state);
 }

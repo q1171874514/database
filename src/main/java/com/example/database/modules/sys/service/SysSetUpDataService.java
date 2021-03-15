@@ -15,5 +15,5 @@ import java.util.List;
  * @since 1.0.0 2021-03-08
  */
 public interface SysSetUpDataService extends CrudService<SysSetUpDataEntity, SysSetUpDataDTO> {
-    List<SysSetUpDataEntity> listBySetUpTypeId(Long setUpTypeId);
+    List<SysSetUpDataEntity> listBySetUpTypeId(Long setUpTypeId, Integer type);
 }

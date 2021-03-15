@@ -44,10 +44,13 @@ public class RecordFieldHandler {
         recordFieldClass.stream().forEach(classData -> {
             RecordField recordField = classData.getAnnotation(RecordField.class);
             NotRecordField notRecordField = classData.getAnnotation(NotRecordField.class);
-            if(recordField != null && !recordField.value().equals("") )
-                recordFieldAnnotation(classData, RecordFieldMap.recordField, recordField.value());
-            else if(notRecordField != null && !notRecordField.value().equals(""))
-                notRecordFieldAnnotation(classData, RecordFieldMap.recordField, notRecordField.value());
+            String className = classData.getSimpleName();
+            if(recordField != null)
+                this.recordFieldAnnotation(classData, RecordFieldMap.recordField,
+                        recordField.value().equals("")? className: recordField.value());
+            else if(notRecordField != null)
+                this.notRecordFieldAnnotation(classData, RecordFieldMap.recordField,
+                        notRecordField.value().equals("")? className: notRecordField.value());
         });
         Map<String, List<String>> recordField = RecordFieldMap.recordField;
     }

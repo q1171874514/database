@@ -98,6 +98,34 @@ public interface Constant {
      * 邮件配置KEY
      */
     String MAIL_CONFIG_KEY = "MAIL_CONFIG_KEY";
+
+    /**
+     * 记录字段
+     */
+    enum RecordField {
+        //默认
+        DEFAULT(0),
+        //初始
+        INITIAL(1),
+        //可改
+        MODIFIED(0),
+        //不可改
+        NOTMODIFIED(1),
+        //可用
+        AVAILABLE(0),
+        //不可用
+        NOTAVAILABLE(1);
+
+        private int value;
+
+        RecordField(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
     /**
      * 定时任务状态
      */

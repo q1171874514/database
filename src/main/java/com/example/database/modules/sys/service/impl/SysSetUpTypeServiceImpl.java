@@ -1,6 +1,7 @@
 package com.example.database.modules.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.database.common.constant.Constant;
 import com.example.database.common.record.dto.SetUpDataDTO;
 import com.example.database.common.service.impl.CrudServiceImpl;
 import com.example.database.common.utils.ConvertUtils;
@@ -33,12 +34,10 @@ public class SysSetUpTypeServiceImpl extends CrudServiceImpl<SysSetUpTypeDao, Sy
     @Override
     public QueryWrapper<SysSetUpTypeEntity> getWrapper(Map<String, Object> params){
         String id = (String)params.get("id");
-        String setUpTableId = (String)params.get("setUpTableId");
-        String type = (String)params.get("type");
+        String typeName = (String)params.get("typeName");
         QueryWrapper<SysSetUpTypeEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id)
-                .eq(StringUtils.isNotBlank(setUpTableId), "set_up_table_id", setUpTableId)
-                .eq(StringUtils.isNotBlank(type), "type", type);
+                .eq(StringUtils.isNotBlank(typeName), "type_name", typeName);
 
         return wrapper;
     }
@@ -50,8 +49,8 @@ public class SysSetUpTypeServiceImpl extends CrudServiceImpl<SysSetUpTypeDao, Sy
     }
 
     @Override
-    public List<SysSetUpDataEntity> listBySetUpTypeId(Long setUpTypeId) {
-        return sysSetUpDataService.listBySetUpTypeId(setUpTypeId);
+    public List<SysSetUpDataEntity> listBySetUpTypeId(Long setUpTypeId, Integer state) {
+        return sysSetUpDataService.listBySetUpTypeId(setUpTypeId, state);
     }
 
     @Override
@@ -59,7 +58,8 @@ public class SysSetUpTypeServiceImpl extends CrudServiceImpl<SysSetUpTypeDao, Sy
         SysSetUpTypeEntity sysSetUpTypeEntity = this.getByTypeName(typeName);
         if( sysSetUpTypeEntity == null)
             return null;
-        List<SysSetUpDataEntity> sysSetUpDataEntitieList = sysSetUpDataService.listBySetUpTypeId(sysSetUpTypeEntity.getId());
+        List<SysSetUpDataEntity> sysSetUpDataEntitieList = sysSetUpDataService.listBySetUpTypeId(sysSetUpTypeEntity.getId(),
+                Constant.RecordField.AVAILABLE.getValue());
         return ConvertUtils.sourceToTarget(sysSetUpDataEntitieList, SetUpDataDTO.class);
     }
 

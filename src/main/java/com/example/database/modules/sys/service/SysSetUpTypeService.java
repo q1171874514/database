@@ -18,7 +18,7 @@ public interface SysSetUpTypeService extends CrudService<SysSetUpTypeEntity, Sys
 
     SysSetUpTypeEntity getByTypeName(String typeName);
 
-    List<SysSetUpDataEntity> listBySetUpTypeId(Long setUpTypeId);
+    List<SysSetUpDataEntity> listBySetUpTypeId(Long setUpTypeId, Integer state);
 
     List<SetUpDataDTO> listByTypeNameSetUp(String typeName);
 }

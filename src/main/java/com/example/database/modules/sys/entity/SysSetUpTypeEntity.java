@@ -26,7 +26,7 @@ public class SysSetUpTypeEntity extends BaseEntity {
      */
 	private String label;
     /**
-     * 表名
+     * 类名
      */
 	private String typeName;
     /**

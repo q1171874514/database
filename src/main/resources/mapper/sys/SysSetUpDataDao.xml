@@ -3,6 +3,17 @@
 
 <mapper namespace="com.example.database.modules.sys.dao.SysSetUpDataDao">
     <select id="listBySetUpTypeId" resultType="com.example.database.modules.sys.entity.SysSetUpDataEntity">
-		select * from sys_set_up_data where set_up_type_id = #{setUpTypeId}
+		select * from sys_set_up_data
+		<where>
+			<if test="setUpTypeId != null">
+				set_up_type_id = #{setUpTypeId}
+				<if test="state != null">
+					and
+				</if>
+			</if>
+			<if test="state != null">
+				sys_set_up_data.state = #{state}
+			</if>
+		</where>
 	</select>
 </mapper>
