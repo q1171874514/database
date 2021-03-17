@@ -3,7 +3,8 @@ package com.example.database.modules.sys.controller;
 import com.example.database.common.annotation.LogOperation;
 import com.example.database.common.constant.Constant;
 import com.example.database.common.page.PageData;
-import com.example.database.common.record.SetUpDataUtils;
+import com.example.database.common.record.RecordFieldMap;
+import com.example.database.common.record.dto.RecordFieldDTO;
 import com.example.database.common.utils.ExcelUtils;
 import com.example.database.common.utils.Result;
 import com.example.database.common.validator.AssertUtils;
@@ -12,6 +13,7 @@ import com.example.database.common.validator.group.AddGroup;
 import com.example.database.common.validator.group.DefaultGroup;
 import com.example.database.common.validator.group.UpdateGroup;
 import com.example.database.modules.sys.dto.SysSetUpDataDTO;
+import com.example.database.modules.sys.dto.SysSetUpTypeDTO;
 import com.example.database.modules.sys.excel.SysSetUpDataExcel;
 import com.example.database.modules.sys.service.SysSetUpDataService;
 import io.swagger.annotations.Api;
@@ -22,10 +24,12 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+import com.example.database.modules.sys.service.SysSetUpTypeService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -40,6 +44,9 @@ import java.util.Map;
 public class SysSetUpDataController {
     @Autowired
     private SysSetUpDataService SysSetUpDataService;
+
+    @Autowired
+    private SysSetUpTypeService SysSetUpTypeService;
 
     @GetMapping("page")
     @ApiOperation("分页")
@@ -73,8 +80,18 @@ public class SysSetUpDataController {
     public Result save(@RequestBody SysSetUpDataDTO dto){
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
-        SysSetUpDataService.save(dto);
+        RecordFieldMap.recordField.get(dto.getFieldName());
+        SysSetUpTypeDTO sysSetUpTypeDTO = SysSetUpTypeService.get(dto.getSetUpTypeId());
+        if(sysSetUpTypeDTO == null || RecordFieldMap.recordField.get(sysSetUpTypeDTO.getTypeName()) == null)
+            return new Result().error("类型不存在");
+        Set<RecordFieldDTO> recordFieldDTOSet = RecordFieldMap.recordField.get(sysSetUpTypeDTO.getTypeName());
+        recordFieldDTOSet.stream()
+                .filter(fieldDTO -> fieldDTO.getFieldName().equals(dto.getFieldName()))
+                .forEach(fieldDTO -> dto.setFieldType(fieldDTO.getSimpleType()));
+        if(dto.getFieldType() == null)
+            return new Result().error("字段无记录");
 
+        SysSetUpDataService.save(dto);
         return new Result();
     }
 

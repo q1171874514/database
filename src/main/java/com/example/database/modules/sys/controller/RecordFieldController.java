@@ -1,9 +1,12 @@
 package com.example.database.modules.sys.controller;
 
+import com.example.database.common.constant.Constant;
 import com.example.database.common.record.RecordFieldMap;
 import com.example.database.common.utils.Result;
+import com.example.database.modules.sys.service.RecordFieldService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -12,19 +15,21 @@ import java.util.Map;
 @RequestMapping("/sys/record")
 @Api(tags="获取记录字段信息")
 public class RecordFieldController {
-    @GetMapping("key")
+    @Autowired
+    private RecordFieldService recordFieldService;
+
+    @GetMapping("typeName")
     @ApiOperation("查询key")
     public Result listKey(){
-        return new Result<>().ok(RecordFieldMap.recordField.keySet());
+        return new Result<>().ok(recordFieldService.listSaveType());
     }
 
-    @GetMapping("value")
+    @GetMapping("field")
     @ApiOperation("查询field")
-    public Result listField(@RequestParam Map<String, Object> params){
-        String key = (String) params.get("key");
-        if(key == null)
+    public Result listField(Long setUpTypeId){
+        if(setUpTypeId == null)
             return new Result<>().ok(RecordFieldMap.recordField.values());
-        return new Result<>().ok(RecordFieldMap.recordField.get(key));
+        return new Result<>().ok(recordFieldService.listSaveData(setUpTypeId));
     }
 
     @GetMapping("list")
@@ -32,4 +37,11 @@ public class RecordFieldController {
     public Result list(){
         return new Result<>().ok(RecordFieldMap.recordField);
     }
+//
+//    @GetMapping("save/key")
+//    @ApiOperation("查询可保存的key")
+//    public Result listKey(){
+//        return new Result<>().ok(RecordFieldMap.recordField.keySet());
+//    }
+
 }

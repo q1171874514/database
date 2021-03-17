@@ -2,6 +2,7 @@ package com.example.database.common.record;
 
 import com.example.database.common.record.annotation.NotRecordField;
 import com.example.database.common.record.annotation.RecordField;
+import com.example.database.common.record.dto.RecordFieldDTO;
 import com.example.database.common.redis.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,35 +53,34 @@ public class RecordFieldHandler {
                 this.notRecordFieldAnnotation(classData, RecordFieldMap.recordField,
                         notRecordField.value().equals("")? className: notRecordField.value());
         });
-        Map<String, List<String>> recordField = RecordFieldMap.recordField;
     }
 
-    private void recordFieldAnnotation(Class<?> classData, Map<String, List<String>> recordMap, String key) {
+    private void recordFieldAnnotation(Class<?> classData, Map<String, Set<RecordFieldDTO>> recordMap, String key) {
         Arrays.stream(classData.getDeclaredFields())
                 .filter(field -> !excludeField.contains(field.getName()))
                 .filter(field -> field.getAnnotation(NotRecordField.class) == null)
                 .forEach(field -> {
                     RecordField annotation = field.getAnnotation(RecordField.class);
-                    String value = field.getName();
+                    String fieldName = field.getName();
                     if(annotation != null && !annotation.value().equals(""))
-                        value = annotation.value();
+                        fieldName = annotation.value();
                     if(recordMap.get(key) == null)
-                        recordMap.put(key, new LinkedList<String>());
-                    recordMap.get(key).add(value);
+                        recordMap.put(key, new LinkedHashSet());
+                    recordMap.get(key).add(RecordFieldMap.valueOfFieldDTO(field, fieldName));
                 });
     }
 
-    private void notRecordFieldAnnotation(Class<?> classData, Map<String, List<String>> recordMap, String key) {
+    private void notRecordFieldAnnotation(Class<?> classData, Map<String, Set<RecordFieldDTO>> recordMap, String key) {
         Arrays.stream(classData.getDeclaredFields())
                 .filter(field -> !excludeField.contains(field.getName()))
                 .filter(field -> field.getAnnotation(RecordField.class) != null)
                 .forEach(field -> {
-                    String value = field.getAnnotation(RecordField.class).value();
-                    if(value.equals(""))
-                        value = field.getName();
+                    String fieldName = field.getAnnotation(RecordField.class).value();
+                    if(fieldName.equals(""))
+                        fieldName = field.getName();
                     if(recordMap.get(key) == null)
-                        recordMap.put(key, new LinkedList<String>());
-                    recordMap.get(key).add(value);
+                        recordMap.put(key, new LinkedHashSet());
+                    recordMap.get(key).add(RecordFieldMap.valueOfFieldDTO(field, fieldName));
                 });
     }
 

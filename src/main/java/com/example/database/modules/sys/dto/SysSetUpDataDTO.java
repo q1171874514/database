@@ -45,6 +45,11 @@ public class SysSetUpDataDTO implements Serializable {
 	@ApiModelProperty(value = "字段值")
 	private String fieldValue;
 
+	@ApiModelProperty(value = "字段类型")
+	@Null(message="字段类型不可填", groups = AddGroup.class)
+	@Null(message="字段类型不可修改", groups = UpdateGroup.class)
+	private String fieldType;
+
 	@ApiModelProperty(value = "备注")
 	private String remark;
 

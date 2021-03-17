@@ -35,7 +35,7 @@ public class SysSetUpDataServiceImpl extends CrudServiceImpl<SysSetUpDataDao, Sy
 
 
     @Override
-    public List<SysSetUpDataEntity> listBySetUpTypeId(Long setUpTypeId, Integer type) {
-        return baseDao.listBySetUpTypeId(setUpTypeId, type);
+    public List<SysSetUpDataEntity> listBySetUpTypeId(Long setUpTypeId, Integer state) {
+        return baseDao.listBySetUpTypeId(setUpTypeId, state);
     }
 }

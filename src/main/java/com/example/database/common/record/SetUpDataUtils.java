@@ -5,6 +5,7 @@ import com.example.database.common.exception.RenException;
 import com.example.database.common.record.annotation.NotRecordField;
 import com.example.database.common.record.annotation.RecordField;
 import com.example.database.common.record.dto.SetUpDataDTO;
+import com.qiniu.util.Json;
 import lombok.SneakyThrows;
 
 import javax.validation.constraints.NotNull;
@@ -107,8 +108,7 @@ public class SetUpDataUtils {
         } else if (type == Double.class) {
             return Double.parseDouble(String.valueOf(value));
         } else if(type == Long.class) {
-            String s = String.valueOf(value);
-            return Long.parseLong(s);
+            return Long.parseLong(String.valueOf(value));
         }
         return value;
     }

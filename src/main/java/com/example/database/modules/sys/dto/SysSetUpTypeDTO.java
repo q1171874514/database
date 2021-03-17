@@ -33,6 +33,7 @@ public class SysSetUpTypeDTO implements Serializable {
 	private String label;
 
 	@ApiModelProperty(value = "表名")
+	@Null(message="{名称不可改}", groups = UpdateGroup.class)
 	private String typeName;
 
 	@ApiModelProperty(value = "备注")

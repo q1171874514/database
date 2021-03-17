@@ -37,6 +37,10 @@ public class SysSetUpDataEntity extends BaseEntity {
      * 字段值
      */
 	private String fieldValue;
+	/**
+	 * 字段类型
+	 */
+	private String fieldType;
     /**
      * 备注
      */
