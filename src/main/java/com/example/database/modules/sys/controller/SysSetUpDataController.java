@@ -56,7 +56,7 @@ public class SysSetUpDataController {
         @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
         @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String")
     })
-    @RequiresPermissions("sys:setupdata:page")
+    @RequiresPermissions("sys:setuptype:page")
     public Result<PageData<SysSetUpDataDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params){
         PageData<SysSetUpDataDTO> page = SysSetUpDataService.page(params);
 
@@ -66,7 +66,7 @@ public class SysSetUpDataController {
 
     @GetMapping("{id}")
     @ApiOperation("信息")
-    @RequiresPermissions("sys:setupdata:info")
+    @RequiresPermissions("sys:setuptype:info")
     public Result<SysSetUpDataDTO> get(@PathVariable("id") Long id){
         SysSetUpDataDTO data = SysSetUpDataService.get(id);
 
@@ -76,7 +76,7 @@ public class SysSetUpDataController {
     @PostMapping
     @ApiOperation("保存")
     @LogOperation("保存")
-    @RequiresPermissions("sys:setupdata:save")
+    @RequiresPermissions("sys:setuptype:save")
     public Result save(@RequestBody SysSetUpDataDTO dto){
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
@@ -98,7 +98,7 @@ public class SysSetUpDataController {
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
-    @RequiresPermissions("sys:setupdata:update")
+    @RequiresPermissions("sys:setuptype:update")
     public Result update(@RequestBody SysSetUpDataDTO dto){
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
@@ -110,7 +110,7 @@ public class SysSetUpDataController {
     @DeleteMapping
     @ApiOperation("删除")
     @LogOperation("删除")
-    @RequiresPermissions("sys:setupdata:delete")
+    @RequiresPermissions("sys:setuptype:delete")
     public Result delete(@RequestBody Long[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
@@ -123,7 +123,7 @@ public class SysSetUpDataController {
     @GetMapping("export")
     @ApiOperation("导出")
     @LogOperation("导出")
-    @RequiresPermissions("sys:setupdata:export")
+    @RequiresPermissions("sys:setuptype:export")
     public void export(@ApiIgnore @RequestParam Map<String, Object> params, HttpServletResponse response) throws Exception {
         List<SysSetUpDataDTO> list = SysSetUpDataService.list(params);
 
