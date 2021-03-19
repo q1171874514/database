@@ -56,31 +56,39 @@ public class RecordFieldHandler {
     }
 
     private void recordFieldAnnotation(Class<?> classData, Map<String, Set<RecordFieldDTO>> recordMap, String key) {
+        Map<String, String> annotationDataMap = new LinkedHashMap<>();
         Arrays.stream(classData.getDeclaredFields())
                 .filter(field -> !excludeField.contains(field.getName()))
                 .filter(field -> field.getAnnotation(NotRecordField.class) == null)
                 .forEach(field -> {
                     RecordField annotation = field.getAnnotation(RecordField.class);
-                    String fieldName = field.getName();
-                    if(annotation != null && !annotation.value().equals(""))
-                        fieldName = annotation.value();
+                    annotationDataMap.clear();
+                    if(annotation != null) {
+                        annotationDataMap.put("fieldName", annotation.value().equals("")? null: annotation.value());
+                        annotationDataMap.put("type", annotation.type().equals("")? null: annotation.type());
+                        annotationDataMap.put("label", annotation.label().equals("")? null: annotation.label());
+                    }
                     if(recordMap.get(key) == null)
                         recordMap.put(key, new LinkedHashSet());
-                    recordMap.get(key).add(RecordFieldMap.valueOfFieldDTO(field, fieldName));
+                    recordMap.get(key).add(RecordFieldMap.valueOfFieldDTO(field, annotationDataMap));
                 });
     }
 
     private void notRecordFieldAnnotation(Class<?> classData, Map<String, Set<RecordFieldDTO>> recordMap, String key) {
+        Map<String, String> annotationDataMap = new LinkedHashMap<>();
         Arrays.stream(classData.getDeclaredFields())
                 .filter(field -> !excludeField.contains(field.getName()))
                 .filter(field -> field.getAnnotation(RecordField.class) != null)
                 .forEach(field -> {
-                    String fieldName = field.getAnnotation(RecordField.class).value();
-                    if(fieldName.equals(""))
-                        fieldName = field.getName();
+                    RecordField annotation = field.getAnnotation(RecordField.class);
+                    annotationDataMap.clear();
+                    annotationDataMap.put("fieldName", annotation.value().equals("")? null: annotation.value());
+                    annotationDataMap.put("type", annotation.type().equals("")? null: annotation.type());
+                    annotationDataMap.put("label", annotation.label().equals("")? null: annotation.label());
+
                     if(recordMap.get(key) == null)
                         recordMap.put(key, new LinkedHashSet());
-                    recordMap.get(key).add(RecordFieldMap.valueOfFieldDTO(field, fieldName));
+                    recordMap.get(key).add(RecordFieldMap.valueOfFieldDTO(field, annotationDataMap));
                 });
     }
 

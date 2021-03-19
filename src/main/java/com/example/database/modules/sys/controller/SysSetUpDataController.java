@@ -83,7 +83,7 @@ public class SysSetUpDataController {
         RecordFieldMap.recordField.get(dto.getFieldName());
         SysSetUpTypeDTO sysSetUpTypeDTO = SysSetUpTypeService.get(dto.getSetUpTypeId());
         if(sysSetUpTypeDTO == null || RecordFieldMap.recordField.get(sysSetUpTypeDTO.getTypeName()) == null)
-            return new Result().error("类型不存在");
+            return new Result().error("类存在");
         Set<RecordFieldDTO> recordFieldDTOSet = RecordFieldMap.recordField.get(sysSetUpTypeDTO.getTypeName());
         recordFieldDTOSet.stream()
                 .filter(fieldDTO -> fieldDTO.getFieldName().equals(dto.getFieldName()))

@@ -14,4 +14,6 @@ import java.util.function.Function;
 @Documented
 public @interface RecordField {
     String value() default "";
+    String type() default "";
+    String label() default "";
 }

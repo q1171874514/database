@@ -94,7 +94,7 @@ public class SysUserDTO implements Serializable {
 	private String deptName;
 
 	@ApiModelProperty(value = "仓库总大小")
-	@RecordField
+	@RecordField(label = "仓库总大小(B)")
 	private Long totalSize;
 
 }

@@ -5,6 +5,7 @@ import com.example.database.common.exception.RenException;
 import com.example.database.common.record.annotation.NotRecordField;
 import com.example.database.common.record.annotation.RecordField;
 import com.example.database.common.record.dto.SetUpDataDTO;
+import com.example.database.common.utils.FieldHandleUtils;
 import com.qiniu.util.Json;
 import lombok.SneakyThrows;
 
@@ -31,7 +32,7 @@ public class SetUpDataUtils {
                 .forEach(setUpDataDTO -> {
                     try {
                         Field field = object.getClass().getDeclaredField(setUpDataDTO.getFieldName());
-                        Object value = objConver(field.getType(), setUpDataDTO.getFieldValue());
+                        Object value = FieldHandleUtils.objConver(field.getType(), setUpDataDTO.getFieldValue());
                         field.setAccessible(true);
                         field.set(object, value);
                         field.setAccessible(false);
@@ -55,7 +56,7 @@ public class SetUpDataUtils {
                 .forEach(setUpDataDTO -> {
                     try {
                         Field field = object.getClass().getField(setUpDataDTO.getFieldName());
-                        Object value = objConver(field.getType(), setUpDataDTO.getFieldValue());
+                        Object value = FieldHandleUtils.objConver(field.getType(), setUpDataDTO.getFieldValue());
                         field.setAccessible(true);
                         field.set(object, value);
                         field.setAccessible(false);
@@ -90,27 +91,6 @@ public class SetUpDataUtils {
             return true;
         }
         return false;
-    }
-
-    /**
-     * Object转换
-     *
-     * @param type  转换类型
-     * @param value 值
-     * @return
-     */
-    private static Object objConver(Class<?> type, Object value) {
-        if(value == null) return null;
-        if (type == String.class) {
-            return String.valueOf(value);
-        } else if (type == Integer.class) {
-            return Integer.parseInt(String.valueOf(value));
-        } else if (type == Double.class) {
-            return Double.parseDouble(String.valueOf(value));
-        } else if(type == Long.class) {
-            return Long.parseLong(String.valueOf(value));
-        }
-        return value;
     }
 
     public static String getTypeName(@NotNull Object object) {

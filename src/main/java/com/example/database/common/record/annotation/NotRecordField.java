@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Inherited
 @Documented
 public @interface NotRecordField {
-
     String value() default "";
-
+    String type() default "";
+    String label() default "";
 }
