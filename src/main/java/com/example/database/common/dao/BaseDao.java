@@ -21,7 +21,7 @@ import java.util.Map;
  * @author Mark sunlightcs@gmail.com
  * @since 1.0.0
  */
-public interface OutFieldDao<T> extends BaseMapper<T> {
+public interface BaseDao<T> extends BaseMapper<T> {
     @Select("SELECT ${field} FROM ${tableName} where ${whereContent} LIMIT 1")
     Map getByOut(@Param("field") String field, @Param("tableName") String tableName,
               @Param("whereContent") String whereContent);

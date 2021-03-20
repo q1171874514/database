@@ -1,13 +1,13 @@
 package com.example.database.common.service.impl;
 
 import com.example.database.common.annotation.OutTablesField;
-import com.example.database.common.dao.OutFieldDao;
+import com.example.database.common.dao.BaseDao;
 import com.example.database.common.service.OutFieldService;
 
 import java.lang.reflect.Field;
 import java.util.*;
 
-public abstract class OutFieldServiceImpl<M extends OutFieldDao<T>, T, D> extends CrudServiceImpl<M, T, D> implements OutFieldService<T, D> {
+public abstract class OutFieldServiceImpl<M extends BaseDao<T>, T, D> extends CrudServiceImpl<M, T, D> implements OutFieldService<T, D> {
     /**
      * 获取dto标有OutTablesField的字段
      */
