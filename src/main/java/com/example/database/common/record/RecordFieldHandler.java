@@ -4,6 +4,7 @@ import com.example.database.common.record.annotation.NotRecordField;
 import com.example.database.common.record.annotation.RecordField;
 import com.example.database.common.record.dto.RecordFieldDTO;
 import com.example.database.common.redis.RedisUtils;
+import com.example.database.common.utils.ScanClassUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
