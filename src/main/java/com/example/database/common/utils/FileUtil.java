@@ -14,8 +14,7 @@ import java.util.UUID;
 
 public class FileUtil {
 
-    private static String directory = GetConfigUtil.get("application.yml")
-                                        .get("file-util.directory").toString();
+    private static String directory = "E:/upload/";
 
     /**
      * 上传
@@ -50,7 +49,7 @@ public class FileUtil {
      * @return
      * @throws Exception
      */
-    public static ResponseEntity<byte[]> download(String path, String name) throws Exception{
+    public static ResponseEntity<byte[]> download(String path, String name) throws IOException {
         //下载文件,简单new个文件
         File downloadFile = new File(path);
 

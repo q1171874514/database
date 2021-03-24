@@ -64,3 +64,5 @@ record:
   class-path: /**/dto/**.class
   redis-key: recordTypeField
   exclude-field: serialVersionUID, creatorName, createDate, creator, updateDate,  updater, updaterName, id
+file-util:
+  directory: E:/upload

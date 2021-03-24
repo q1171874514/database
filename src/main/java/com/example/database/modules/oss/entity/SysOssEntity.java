@@ -36,4 +36,9 @@ public class SysOssEntity extends BaseEntity {
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
 	private String creatorName;
+
+	/**
+	 * 类型
+	 */
+	private Integer type;
 }

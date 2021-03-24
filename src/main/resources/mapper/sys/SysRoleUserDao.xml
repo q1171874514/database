@@ -10,6 +10,7 @@
         </foreach>
     </delete>
 
+
     <delete id="deleteByUserIds">
         delete from sys_role_user where user_id in
         <foreach item="userId" collection="array" open="(" separator="," close=")">
