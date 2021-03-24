@@ -55,8 +55,7 @@ public class FileDTO implements Serializable {
 	private String url;
 
 	@ApiModelProperty(value = "状态（0可用，1回收站，2不可用）")
-	@Null(message = "无法修改状态", groups = AddGroup.class)
-	@Null(message = "无法修改状态", groups = UpdateGroup.class)
+	@Null(message = "状态不可填", groups = AddGroup.class)
 	private Integer state;
 
 	@ApiModelProperty(value = "创建者")

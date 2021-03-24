@@ -52,12 +52,10 @@ public class WarehouseServiceImpl extends CrudServiceImpl<WarehouseDao, Warehous
     public QueryWrapper<WarehouseEntity> getWrapper(Map<String, Object> params){
         String id = (String)params.get("id");
         String state = (String)params.get("state");
-        String[] ids = (String[])params.get("ids");
         String[] loginDataIds = (String[])params.get("loginDataIds");
         QueryWrapper<WarehouseEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id)
                 .eq(StringUtils.isNotBlank(state), "state", state)
-                .in(ids != null, "id", ids)
                 .in(loginDataIds != null, "id", loginDataIds.length == 0 ? new String[]{"-1"}: loginDataIds);
         return wrapper;
     }

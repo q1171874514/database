@@ -126,7 +126,8 @@ public class FileController {
 
     @GetMapping("loginData/list")
     @ApiOperation("登入用户文件信息")
-    public Result loginDataList(@RequestParam Map<String, Object> params) {
+    public Result loginDataList(@RequestParam Map<String, Object> params, String[] ids) {
+        params.put("ids", ids);
         List<FileDTO> dtoList = fileService.loginDataList(params);
         return new Result().ok(dtoList);
     }

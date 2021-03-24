@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -120,7 +121,8 @@ public class FolderController {
 
     @GetMapping("loginData/list")
     @ApiOperation("登入用户文件夹信息")
-    public Result loginDataList(@RequestParam Map<String, Object> params) {
+    public Result loginDataList(@RequestParam Map<String, Object> params, String[] ids) {
+        params.put("ids", ids);
         List<FolderDTO> dtoList = folderService.loginDataList(params);
         return new Result().ok(dtoList);
     }

@@ -14,10 +14,10 @@
     </resultMap>
 
     <update id="updateState">
-        update warehouse set state = #{state}
+        update warehouse set warehouse.state = #{state}
             <where>
                 id in
-                <foreach item="state" collection="array" open="(" separator="," close=")">
+                <foreach item="id" collection="id" open="(" separator="," close=")">
                     #{id}
                 </foreach>
             </where>

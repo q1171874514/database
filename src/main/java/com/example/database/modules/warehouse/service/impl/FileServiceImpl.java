@@ -44,18 +44,18 @@ public class FileServiceImpl extends CrudServiceImpl<FileDao, FileEntity, FileDT
         String[] loginDataIds = (String[])params.get("loginDataIds");
         if(loginDataIds != null && loginDataIds.length == 0)
             loginDataIds = new String[]{"-1"};
-        String[] folderIds = (String[])params.get("folderIds");
-        String[] warehouseIds = (String[])params.get("warehouses");
-        if(warehouseIds != null) {
-            warehouseIds = folderService.getFolderIdByWarehouseId(warehouseIds);
+        String folderId = (String)params.get("folderId");
+        String warehouseId = (String)params.get("warehouseId");
+        String[] warehouseIds = null;
+        if(warehouseId != null) {
+            warehouseIds = folderService.getFolderIdByWarehouseId(warehouseId);
             if(warehouseIds.length == 0)
                 warehouseIds = new String[]{"-1"};
         }
 
-
         wrapper.eq(StringUtils.isNotBlank(id), "id", id)
                 .in(ids != null, "id", ids)
-                .in(folderIds != null, "folder_id", folderIds)
+                .eq(StringUtils.isNotBlank(folderId), "folder_id", folderId)
                 .in(loginDataIds != null, "folder_id", loginDataIds)
                 .in(warehouseIds != null, "folder_id", warehouseIds);
 

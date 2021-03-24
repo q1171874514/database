@@ -31,10 +31,7 @@ public class FolderServiceImpl extends CrudServiceImpl<FolderDao, FolderEntity, 
     public QueryWrapper<FolderEntity> getWrapper(Map<String, Object> params){
         String id = (String)params.get("id");
         String[] ids = (String[])params.get("ids");
-        String[] warehouseIds = (String[])params.get("warehouseIds");
         String[] loginDataIds = (String[])params.get("loginDataIds");
-        if(warehouseIds != null && warehouseIds.length == 0)
-            warehouseIds = new String[]{"-1"};
         if(loginDataIds != null && loginDataIds.length == 0)
             loginDataIds = new String[]{"-1"};
         String pid = (String)params.get("pid");
@@ -44,7 +41,6 @@ public class FolderServiceImpl extends CrudServiceImpl<FolderDao, FolderEntity, 
                 .eq(StringUtils.isNotBlank(pid), "pid", pid)
                 .eq(StringUtils.isNotBlank(warehouseId), "warehouse_id", warehouseId)
                 .in(ids != null, "id", ids)
-                .in(warehouseIds != null, "warehouse_id", warehouseIds)
                 .in(loginDataIds != null, "warehouse_id", loginDataIds);
 
         return wrapper;
