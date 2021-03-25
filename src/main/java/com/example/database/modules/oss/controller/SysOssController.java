@@ -32,10 +32,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 文件上传
@@ -126,7 +123,20 @@ public class SysOssController {
 	@RequiresPermissions("sys:oss:all")
 	public Result delete(@RequestBody Long[] ids){
 		sysOssService.deleteBatchIds(Arrays.asList(ids));
+		return new Result();
+	}
 
+	@DeleteMapping("file")
+	@ApiOperation(value = "文件删除")
+	@LogOperation("文件删除")
+	@RequiresPermissions("sys:oss:all")
+	public Result fileDelete(@RequestBody Long[] ids){
+		List<SysOssEntity> sysOssEntityList = sysOssService.getListByIds(Arrays.asList(ids));
+		for (SysOssEntity sysOssEntity: sysOssEntityList) {
+			if(Constant.oss.STATEINVALID.getValue() == sysOssEntity.getState())
+				return new Result().error("有文件可用，不可删除");
+		}
+		sysOssService.fileDelete(sysOssEntityList);
 		return new Result();
 	}
 

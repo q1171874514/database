@@ -12,7 +12,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.database.common.page.PageData;
 import com.example.database.common.service.BaseService;
 import com.example.database.modules.oss.entity.SysOssEntity;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,4 +26,10 @@ public interface SysOssService extends BaseService<SysOssEntity> {
 	QueryWrapper<SysOssEntity> getWrapper(Map<String, Object> params);
 
 	PageData<SysOssEntity> page(Map<String, Object> params);
+
+	List<SysOssEntity> getListByIds(List<Long> ids);
+
+	List<SysOssEntity> fileDelete(List<SysOssEntity> sysOssEntityList);
+
+	void updateStateById(Integer state, Object... id);
 }

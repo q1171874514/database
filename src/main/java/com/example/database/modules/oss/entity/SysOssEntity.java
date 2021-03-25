@@ -38,7 +38,12 @@ public class SysOssEntity extends BaseEntity {
 	private String creatorName;
 
 	/**
-	 * 类型
+	 * 类型（0:系统文件上传，1:仓库文件上传）
 	 */
 	private Integer type;
+
+	/**
+	 * 状态（0：正常，1：无效）
+	 */
+	private Integer state;
 }

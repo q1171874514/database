@@ -28,4 +28,6 @@ public interface FileService extends CrudService<FileEntity, FileDTO> {
     String[] getFolderIdById(Object... ids);
 
     void backups(FileBackupsDTO dto);
+
+    Boolean isDataByOss(Long sysOssId);
 }

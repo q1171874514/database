@@ -100,6 +100,26 @@ public interface Constant {
     String MAIL_CONFIG_KEY = "MAIL_CONFIG_KEY";
 
     /**
+     * 上传文件
+     */
+    enum oss {
+        /**
+         * 状态
+         */
+        STATEINVALID(1),
+        STATENORMAL(0);
+
+        private int value;
+
+        oss(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+    /**
      * 记录字段
      */
     enum RecordField {

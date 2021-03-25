@@ -11,6 +11,7 @@ package com.example.database.modules.oss.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.database.modules.oss.entity.SysOssEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 文件上传
@@ -19,5 +20,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SysOssDao extends BaseMapper<SysOssEntity> {
-
+    void updateStateById(@Param("id") Object[] id, @Param("state") Integer state);
 }

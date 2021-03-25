@@ -5,6 +5,7 @@ import com.example.database.modules.warehouse.entity.FileEntity;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文件
@@ -15,4 +16,8 @@ import java.util.List;
 @Mapper
 public interface FileDao extends BaseDao<FileEntity> {
 	List<String> getFolderIdById(Object... ids);
+
+	Integer isDataOss(Object sysOssId);
+
+	List<Long> getSysOssIdById(Object... id);
 }

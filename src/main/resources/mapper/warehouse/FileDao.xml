@@ -25,4 +25,19 @@
         </where>
     </select>
 
+    <select id="isDataByOss" resultType="int">
+        select 1 from file
+        <where>
+            sys_oss_id = #{sysOssId}
+        </where>
+        limit 1
+    </select>
+
+    <select id="getSysOssIdById" resultType="Long">
+        select distinct sys_oss_id from file where id in
+        <foreach item="folderId" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
 </mapper>

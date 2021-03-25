@@ -3,5 +3,13 @@
 
 <mapper namespace="com.example.database.modules.oss.dao.SysOssDao">
 
-
+    <update id="updateStateById" >
+        update sys_oss set sys_oss.state = #{state}
+        <where>
+            id in
+            <foreach item="id" collection="array" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </where>
+    </update>
 </mapper>

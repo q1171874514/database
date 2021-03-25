@@ -1,6 +1,7 @@
 package com.example.database.modules.warehouse.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.database.common.constant.Constant;
 import com.example.database.common.exception.RenException;
 import com.example.database.common.service.impl.CrudServiceImpl;
 import com.example.database.modules.oss.cloud.OSSFactory;
@@ -13,7 +14,9 @@ import com.example.database.modules.warehouse.entity.FileEntity;
 import com.example.database.modules.warehouse.service.FileService;
 import com.example.database.modules.warehouse.service.FolderService;
 import com.example.database.modules.warehouse.service.WarehouseService;
+import jdk.nashorn.internal.runtime.arrays.ArrayIndex;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +38,17 @@ public class FileServiceImpl extends CrudServiceImpl<FileDao, FileEntity, FileDT
     private FolderService folderService;
     @Autowired
     private SysOssService sysOssService;
+
+    @Override
+    public void delete(Long[] ids) {
+        List<Long> sysOssIdList = baseDao.getSysOssIdById(ids);
+        super.delete(ids);
+        for (int i = 0; i < sysOssIdList.size(); i++) {
+            if(!isDataByOss(sysOssIdList.get(i)))
+                sysOssIdList.remove(i--);
+        }
+        sysOssService.updateStateById(Constant.oss.STATEINVALID.getValue(), sysOssIdList.toArray());
+    }
 
     @Override
     public QueryWrapper<FileEntity> getWrapper(Map<String, Object> params){
@@ -135,6 +149,11 @@ public class FileServiceImpl extends CrudServiceImpl<FileDao, FileEntity, FileDT
             fileEntity.setFolderId(dto.getFolderId());
         });
         this.insertBatch(fileEntities);
+    }
+
+    @Override
+    public Boolean isDataByOss(Long sysOssId) {
+        return baseDao.isDataOss(sysOssId) != null;
     }
 
 
