@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -36,6 +37,9 @@ public class WarehouseDTO implements Serializable {
 	@NotNull(message = "仓库大小不能空", groups = AddGroup.class)
 	private Long size;
 
+	@ApiModelProperty(value = "绑定的用户名")
+	private List<String> userNameList;
+
 	@ApiModelProperty(value = "状态（0在使用，1无人用）")
 	@Null(message = "无法修改状态", groups = AddGroup.class)
 	@Null(message = "无法修改状态", groups = UpdateGroup.class)
@@ -44,14 +48,18 @@ public class WarehouseDTO implements Serializable {
 	@ApiModelProperty(value = "创建者")
 	private Long creator;
 
+	@ApiModelProperty(value = "创建者用户名")
+	private String creatorUsername;
+
 	@ApiModelProperty(value = "创建时间")
 	private Date createDate;
 
 	@ApiModelProperty(value = "更新者")
 	private Long updater;
 
+	@ApiModelProperty(value = "创建者用户名")
+	private String updaterUsername;
+
 	@ApiModelProperty(value = "更新时间")
 	private Date updateDate;
-
-
 }

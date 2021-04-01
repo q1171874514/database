@@ -31,14 +31,14 @@ public class RecordFieldServiceImpl implements RecordFieldService {
     public Set<RecordFieldDTO> listSaveData(@NotNull Long setUpTypeId) {
 
         String typeName = sysSetUpTypeService.selectById(setUpTypeId).getTypeName();
-        LinkedHashSet<RecordFieldDTO> recordDataSet = new LinkedHashSet<>(RecordFieldMap.recordField.get(typeName));
+        LinkedHashSet<RecordFieldDTO> recordDataSet = new LinkedHashSet<>();
         Map<String, Boolean> typeNameToBoolMap = new LinkedHashMap<>();
         sysSetUpDataService.listBySetUpTypeId(setUpTypeId, null).stream()
                 .map(dto -> dto.getFieldName())
                 .forEach(fieldName -> typeNameToBoolMap.put(fieldName, true));
-        recordDataSet.stream()
-                .filter(dto -> typeNameToBoolMap.get(dto.getFieldName()) != null)
-                .forEach(dto -> recordDataSet.remove(dto));
+        RecordFieldMap.recordField.get(typeName).stream()
+                .filter(dto -> typeNameToBoolMap.get(dto.getFieldName()) == null)
+                .forEach(recordDataSet::add);
 
         return recordDataSet;
     }

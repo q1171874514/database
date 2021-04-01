@@ -17,7 +17,7 @@ import java.util.List;
 public interface UserWarehouseDao extends BaseDao<UserWarehouseEntity> {
 	List<String> getWarehouseIdByUserId(Object... userId);
 
-	List<String> getUserIdByWarehouseId(@Param("warehouseId") Object... warehouseId);
+	List<String> getUserIdByWarehouseId(Object... warehouseId);
 
 	Integer isData(@Param("userId") Object userId, @Param("warehouseId") Object warehouseId);
 

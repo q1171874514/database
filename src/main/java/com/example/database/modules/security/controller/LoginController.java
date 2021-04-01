@@ -10,21 +10,29 @@ package com.example.database.modules.security.controller;
 
 import com.example.database.common.exception.ErrorCode;
 import com.example.database.common.exception.RenException;
+import com.example.database.common.record.SetUpDataUtils;
+import com.example.database.common.utils.ConvertUtils;
 import com.example.database.common.utils.IpUtils;
 import com.example.database.common.utils.Result;
 import com.example.database.common.validator.AssertUtils;
+import com.example.database.common.validator.ValidatorUtils;
+import com.example.database.common.validator.group.AddGroup;
+import com.example.database.common.validator.group.DefaultGroup;
 import com.example.database.modules.log.entity.SysLogLoginEntity;
 import com.example.database.modules.log.enums.LoginOperationEnum;
 import com.example.database.modules.log.enums.LoginStatusEnum;
 import com.example.database.modules.log.service.SysLogLoginService;
 import com.example.database.modules.security.dto.LoginDTO;
 import com.example.database.common.password.PasswordUtils;
+import com.example.database.modules.security.dto.RegisterUser;
 import com.example.database.modules.security.service.CaptchaService;
 import com.example.database.modules.security.service.SysUserTokenService;
 import com.example.database.modules.security.user.SecurityUser;
 import com.example.database.modules.security.user.UserDetail;
 import com.example.database.modules.sys.dto.SysUserDTO;
 import com.example.database.modules.sys.enums.UserStatusEnum;
+import com.example.database.modules.sys.service.SysSetUpDataService;
+import com.example.database.modules.sys.service.SysSetUpTypeService;
 import com.example.database.modules.sys.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -60,6 +68,8 @@ public class LoginController {
 	private CaptchaService captchaService;
 	@Autowired
 	private SysLogLoginService sysLogLoginService;
+	@Autowired
+	private SysSetUpTypeService sysSetUpTypeService;
 
 	@GetMapping("captcha")
 	@ApiOperation(value = "验证码", produces="application/octet-stream")
@@ -160,5 +170,14 @@ public class LoginController {
 
 		return new Result();
 	}
-	
+
+	@PostMapping("register")
+	@ApiOperation(value = "注册")
+	public Result register(@RequestBody RegisterUser dto) {
+		SetUpDataUtils.saveSetUp(dto, sysSetUpTypeService.listByTypeNameSetUp(SetUpDataUtils.getTypeName(dto)));
+		ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
+		SysUserDTO sysUserDTO = ConvertUtils.sourceToTarget(dto, SysUserDTO.class);
+		sysUserService.save(sysUserDTO);
+		return new Result();
+	}
 }

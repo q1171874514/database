@@ -22,4 +22,15 @@
                 </foreach>
             </where>
     </update>
+
+    <select id="isState" resultType="int">
+        select 1 from warehouse
+        <where>
+            state=#{state} and id in
+            <foreach item="id" collection="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </where>
+        limit 1
+    </select>
 </mapper>

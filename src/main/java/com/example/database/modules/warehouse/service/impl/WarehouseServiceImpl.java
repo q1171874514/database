@@ -5,6 +5,8 @@ import com.example.database.common.exception.RenException;
 import com.example.database.common.service.impl.CrudServiceImpl;
 import com.example.database.modules.security.user.SecurityUser;
 import com.example.database.modules.security.user.UserDetail;
+import com.example.database.modules.sys.dto.SysUserDTO;
+import com.example.database.modules.sys.service.SysUserService;
 import com.example.database.modules.warehouse.dao.UserWarehouseDao;
 import com.example.database.modules.warehouse.dao.WarehouseDao;
 import com.example.database.modules.warehouse.dto.WarehouseDTO;
@@ -31,32 +33,55 @@ import java.util.Map;
 public class WarehouseServiceImpl extends CrudServiceImpl<WarehouseDao, WarehouseEntity, WarehouseDTO> implements WarehouseService {
     @Autowired
     private UserWarehouseService userWarehouseService;
+    @Autowired
+    private SysUserService sysUserService;
 
     @Override
     protected WarehouseDTO entityToDto(WarehouseEntity entity, Class<?> dtoClass) {
         WarehouseDTO warehouseDTO = super.entityToDto(entity, dtoClass);
-        warehouseDTO.setName(userWarehouseService.getByUserWarehouse(warehouseDTO.getId()).getWarehouseName());
+//        warehouseDTO.setName(userWarehouseService.getByUserWarehouse(warehouseDTO.getId()).getWarehouseName());
+        String[] userId = userWarehouseService.getUserIdByWarehouseId(warehouseDTO.getId());
+        warehouseDTO.setUserNameList(sysUserService.getUsernameById(userId));
+        warehouseDTO.setCreatorUsername(sysUserService.getUsernameById(warehouseDTO.getCreator()).get(0));
+        warehouseDTO.setUpdaterUsername(sysUserService.getUsernameById(warehouseDTO.getUpdater()).get(0));
         return warehouseDTO;
     }
 
-    @Override
-    protected List<WarehouseDTO> entityToDtoList(List<WarehouseEntity> entityList) {
-        List<WarehouseDTO> dtoList = new ArrayList<>();
-        entityList.stream().forEach((entity) -> {
-            dtoList.add(this.entityToDto(entity, currentDtoClass()));
-        });
-        return dtoList;
-    }
+//    @Override
+//    protected List<WarehouseDTO> entityToDtoList(List<WarehouseEntity> entityList) {
+//        List<WarehouseDTO> dtoList = new ArrayList<>();
+//        entityList.stream().forEach((entity) -> {
+//            dtoList.add(this.entityToDto(entity, currentDtoClass()));
+//        });
+//        return dtoList;
+//    }
 
     @Override
     public QueryWrapper<WarehouseEntity> getWrapper(Map<String, Object> params){
         String id = (String)params.get("id");
         String state = (String)params.get("state");
+        String name = (String)params.get("name");
         String[] loginDataIds = (String[])params.get("loginDataIds");
+        String username = (String) params.get("username");
+        String[] usernameWarehouseId = null;
+        if(username != null) {
+            SysUserDTO sysUserDTO = sysUserService.getByUsername(username);
+            if(sysUserDTO != null) {
+                usernameWarehouseId = userWarehouseService.getWarehouseIdByUserId(sysUserDTO.getId());
+            }
+            if(usernameWarehouseId.length == 0)
+                usernameWarehouseId = new String[]{"-1"};
+        }
+
+        if(loginDataIds != null && loginDataIds.length == 0) {
+            loginDataIds = new String[]{"-1"};
+        }
         QueryWrapper<WarehouseEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id)
                 .eq(StringUtils.isNotBlank(state), "state", state)
-                .in(loginDataIds != null, "id", loginDataIds.length == 0 ? new String[]{"-1"}: loginDataIds);
+                .in(usernameWarehouseId != null, "id", usernameWarehouseId)
+                .like(StringUtils.isNotBlank(name), "name", name)
+                .in(loginDataIds != null, "id", loginDataIds);
         return wrapper;
     }
 
@@ -127,8 +152,16 @@ public class WarehouseServiceImpl extends CrudServiceImpl<WarehouseDao, Warehous
     }
 
     @Override
+    public Boolean isState(Integer state, Object... id) {
+        if(id.length == 0)
+            return true;
+        Integer state1 = baseDao.isState(state, id);
+        return baseDao.isState(state, id) != null;
+    }
+
+    @Override
     public void update(WarehouseDTO dto) {
-        if(dto.getName() != null){
+        if(isData(dto.getId()) && dto.getName() != null){
             UserWarehouseEntity userWarehouse = userWarehouseService.getByUserWarehouse(dto.getId());
             userWarehouse.setWarehouseName(dto.getName());
             userWarehouseService.updateById(userWarehouse);

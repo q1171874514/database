@@ -16,4 +16,6 @@ import java.util.List;
 @Mapper
 public interface WarehouseDao extends BaseDao<WarehouseEntity> {
     void updateState(@Param("state") Object state, @Param("id") Object... id);
+
+    Integer isState(@Param("state") Object state, @Param("id") Object[] id);
 }

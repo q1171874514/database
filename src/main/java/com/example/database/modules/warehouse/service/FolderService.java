@@ -2,9 +2,7 @@ package com.example.database.modules.warehouse.service;
 
 import com.example.database.common.service.CrudService;
 import com.example.database.modules.warehouse.dto.FolderDTO;
-import com.example.database.modules.warehouse.dto.WarehouseDTO;
 import com.example.database.modules.warehouse.entity.FolderEntity;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -28,4 +26,6 @@ public interface FolderService extends CrudService<FolderEntity, FolderDTO> {
     String[] getFolderIdByWarehouseId(Object... warehouseId);
 
     String[] getWarehouseIdByFolderId(Object... folderId);
+
+    List<FolderDTO> getWarehouseFolderList(String warehouseId);
 }

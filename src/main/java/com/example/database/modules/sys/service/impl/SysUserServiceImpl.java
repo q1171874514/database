@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -157,5 +158,12 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUserEntit
 	@Override
 	public int getCountByDeptId(Long deptId) {
 		return baseDao.getCountByDeptId(deptId);
+	}
+
+	@Override
+	public List<String> getUsernameById(Object... id) {
+		if(id.length == 0)
+			return new ArrayList<String>();
+		return baseDao.getUsernameById(id);
 	}
 }

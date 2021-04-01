@@ -1,7 +1,9 @@
 package com.example.database.modules.warehouse.dto;
 
+import com.example.database.common.utils.TreeNode;
 import com.example.database.common.validator.group.AddGroup;
 import com.example.database.common.validator.group.UpdateGroup;
+import com.example.database.modules.sys.dto.SysMenuDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,7 +22,7 @@ import java.util.Date;
  */
 @Data
 @ApiModel(value = "文件夹")
-public class FolderDTO implements Serializable {
+public class FolderDTO extends TreeNode<FolderDTO>  implements Serializable {
     private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(value = "id")

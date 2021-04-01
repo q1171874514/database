@@ -1,19 +1,15 @@
 package com.example.database.common.record;
 
 import com.example.database.common.constant.Constant;
-import com.example.database.common.exception.RenException;
 import com.example.database.common.record.annotation.NotRecordField;
 import com.example.database.common.record.annotation.RecordField;
 import com.example.database.common.record.dto.SetUpDataDTO;
 import com.example.database.common.utils.FieldHandleUtils;
-import com.qiniu.util.Json;
 import lombok.SneakyThrows;
 
 import javax.validation.constraints.NotNull;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 根据设置处理对象
@@ -95,13 +91,17 @@ public class SetUpDataUtils {
 
     public static String getTypeName(@NotNull Object object) {
         Class<?> classData = object.getClass();
+        String name = classData.getSimpleName();
         RecordField recordField = classData.getAnnotation(RecordField.class);
         if(recordField != null) {
-            return recordField.value();
+            name = recordField.value().equals("") ? name: recordField.value();
+            return name;
         }
         NotRecordField notRecordField = classData.getAnnotation(NotRecordField.class);
-        if(notRecordField != null)
-            return notRecordField.value();
+        if(notRecordField != null) {
+            name = notRecordField.value().equals("")? name: notRecordField.value();
+            return name;
+        }
         return null;
     }
 }

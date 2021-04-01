@@ -44,8 +44,6 @@ public class UserWarehouseServiceImpl extends BaseServiceImpl<UserWarehouseDao, 
 
     @Override
     public Boolean isData(Object userId, Object warehouseId) {
-        Integer data = baseDao.isData(userId, warehouseId);
-        String a = "d";
         return baseDao.isData(userId, warehouseId) != null;
     }
 

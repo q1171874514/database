@@ -49,4 +49,6 @@ public interface SysUserService extends BaseService<SysUserEntity> {
 	 * 根据部门ID，查询用户数
 	 */
 	int getCountByDeptId(Long deptId);
+
+	List<String> getUsernameById(Object... id);
 }

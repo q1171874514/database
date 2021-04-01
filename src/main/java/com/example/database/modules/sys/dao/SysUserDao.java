@@ -37,4 +37,6 @@ public interface SysUserDao extends BaseMapper<SysUserEntity> {
 	 */
 	int getCountByDeptId(Long deptId);
 
+	List<String> getUsernameById(Object[] id);
+
 }

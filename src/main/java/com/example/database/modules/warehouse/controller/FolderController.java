@@ -118,6 +118,14 @@ public class FolderController {
     }
 
 
+    @GetMapping("loginData/nav")
+    @ApiOperation("登入用户文件夹信息树形")
+    public Result loginDataNav(String warehouseId) {
+        if(warehouseId == null || !warehouseService.isData(warehouseId))
+            return new Result().error("仓库不存在或无权限访问");
+        List<FolderDTO> dtoList = folderService.getWarehouseFolderList(warehouseId);
+        return new Result().ok(dtoList);
+    }
 
     @GetMapping("loginData/list")
     @ApiOperation("登入用户文件夹信息")

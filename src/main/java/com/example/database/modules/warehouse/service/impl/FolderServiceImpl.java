@@ -3,6 +3,7 @@ package com.example.database.modules.warehouse.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.database.common.exception.RenException;
 import com.example.database.common.service.impl.CrudServiceImpl;
+import com.example.database.common.utils.TreeUtils;
 import com.example.database.modules.warehouse.dao.FolderDao;
 import com.example.database.modules.warehouse.dto.FolderDTO;
 import com.example.database.modules.warehouse.entity.FolderEntity;
@@ -12,9 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 文件夹
@@ -95,6 +94,14 @@ public class FolderServiceImpl extends CrudServiceImpl<FolderDao, FolderEntity, 
         if(folderId.length == 0)
             return new String[0];
         return baseDao.getWarehouseIdByFolderId(folderId).toArray(new String[0]);
+    }
+
+    @Override
+    public List<FolderDTO> getWarehouseFolderList(String warehouseId) {
+        Map<String, Object> params = new LinkedHashMap<>();
+        params.put("warehouseId", warehouseId);
+        List<FolderDTO> dtoList = this.list(params);
+        return TreeUtils.build(dtoList);
     }
 
 

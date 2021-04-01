@@ -161,7 +161,8 @@ public class WarehouseController {
     public Result delete(@RequestBody Long[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
-
+        if(warehouseService.isState(0, ids))
+            new Result<>().error("有在使用的仓库，无法删除");
         warehouseService.delete(ids);
 
         return new Result();

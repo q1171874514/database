@@ -27,4 +27,6 @@ public interface WarehouseService extends CrudService<WarehouseEntity, Warehouse
     Boolean isData(Object... id);
 
     void updateState(Integer state, Object... id);
+
+    Boolean isState(Integer state, Object... id);
 }
